@@ -1,0 +1,36 @@
+<h1>Tickets</h1>
+
+<table>
+	<% if @tickets.any? %>
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Description</th>
+				<th>Assigned User</th>
+				<th>Status</th>
+				<th>Due Date</th>
+				<th>Progress</th>
+				<th colspan="3"></th>
+			</tr>
+		</thead>
+	<% end %>
+
+
+  <tbody>
+    <% @tickets.each do |ticket| %>
+      <tr>
+        <td><%= ticket.title %></td>
+        <td><%= ticket.description %></td>
+        <td><%= ticket.assigned_user&.name %></td>
+        <td><%= ticket.status.name.capitalize %></td>
+        <td><%= ticket.due_date %></td>
+				<td><%= ticket.progress %></td>
+        <td><%= link_to 'Show', ticket_path(ticket) %></td>
+        <td><%= link_to 'Edit', edit_ticket_path(ticket) %></td>
+        <td><%= link_to 'Destroy', ticket_path(ticket), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New Ticket', new_ticket_path %>
