@@ -1,0 +1,64 @@
+<!-- app/views/users/show.html.erb -->
+
+<h1>User: <%= @user.name %></h1>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Due Date Reminder:</strong>
+  <%= @user.send_due_date_reminder ? 'Enabled' : 'Disabled' %>
+</p>
+
+<p>
+  <strong>Reminder Interval:</strong>
+  <%= @user.due_date_reminder_interval %>
+</p>
+
+<p>
+  <strong>Reminder Time:</strong>
+  <%= @user.due_date_reminder_time %>
+</p>
+
+<p>
+  <strong>Time Zone:</strong>
+  <%= @user.time_zone %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back to Users', users_path %>
+<hr>
+
+<h2>Assigned Tickets</h2>
+
+<% if @tickets.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Due Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tickets.each do |ticket| %>
+        <tr>
+          <td><%= ticket.title %></td>
+          <td><%= ticket.description %></td>
+          <td><%= ticket.status.name %></td>
+          <td><%= ticket.due_date %></td>
+          <td>
+            <%= link_to 'Show', ticket_path(ticket) %> |
+            <%= link_to 'Edit', edit_ticket_path(ticket) %> |
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No tickets assigned.</p>
+<% end %>

@@ -1,0 +1,52 @@
+<!-- app/views/users/edit.html.erb -->
+
+<h1>Edit User</h1>
+
+<%= form_with(model: @user, local: true) do |form| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :email %>
+    <%= form.email_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :send_due_date_reminder %>
+    <%= form.check_box :send_due_date_reminder %>
+  </div>
+
+  <div>
+    <%= form.label :due_date_reminder_interval %>
+    <%= form.number_field :due_date_reminder_interval %>
+  </div>
+
+  <div>
+    <%= form.label :due_date_reminder_time %>
+    <%= form.time_select :due_date_reminder_time %>
+  </div>
+
+  <div>
+    <%= form.label :time_zone %>
+    <%= form.text_field :time_zone %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Back to Users', users_path %>
