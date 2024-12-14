@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-  let!(:user) { create(:user) }  # Assuming you have a User factory set up for testing
+  let!(:user) { create(:user) }
 
   describe "GET #index" do
     it "assigns all users to @users" do

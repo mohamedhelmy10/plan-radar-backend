@@ -4,13 +4,15 @@
 <%= link_to 'New User', new_user_path %>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
+	<% if @users.any? %>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+	<% end %>
 
   <tbody>
     <% @users.each do |user| %>
