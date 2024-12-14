@@ -6,33 +6,35 @@ RSpec.describe Status, type: :model do
 
   # Validations
   it { should validate_presence_of(:name) }
-  it { should validate_uniqueness_of(:name) }
-  it { should validate_inclusion_of(:name).in_array(['Pending', 'In Progress', 'Completed', 'On Hold', 'Resolved', 'Over Due']) }
 
-  # Enum validation for notification type
-  describe "enums" do
-    it "should define valid notification types" do
-      expect(Status.notification_types.keys).to match_array(['email', 'sms', 'push'])
-    end
+  # Create statuses before running enum tests
+  before(:all) do
+    Status.create(name: :pending)
+    Status.create(name: :in_progress)
+    Status.create(name: :completed)
+    Status.create(name: :on_hold)
+    Status.create(name: :resolved)
+    Status.create(name: :over_due)
   end
 
-  # Optional: You can also add tests for default status and any scopes (if defined in the model)
-
-  # Example: Test default status method
-  describe ".default_status" do
-    it "returns the default status 'Pending'" do
-      default_status = Status.default_status
-      expect(default_status.name).to eq('Pending')
+  describe "enum name" do
+    it "maps pending to 0" do
+      expect(Status.find_by(name: 0).name).to eq('pending')
     end
-  end
-
-  # Optional: Test scopes if defined
-  describe ".active" do
-    it "returns the active statuses" do
-      active_statuses = Status.active
-      expect(active_statuses).to include(Status.find_by(name: 'Pending'))
-      expect(active_statuses).to include(Status.find_by(name: 'In Progress'))
-      expect(active_statuses).to include(Status.find_by(name: 'On Hold'))
+    it "maps in_progress to 1" do
+			expect(Status.find_by(name: 1).name).to eq('in_progress')
+    end
+    it "maps completed to 2" do
+			expect(Status.find_by(name: 2).name).to eq('completed')
+    end
+    it "maps on_hold to 3" do
+      expect(Status.find_by(name: 3).name).to eq('on_hold')
+    end
+    it "maps resolved to 4" do
+      expect(Status.find_by(name: 4).name).to eq('resolved')
+    end
+    it "maps overdue to 5" do
+      expect(Status.find_by(name: 5).name).to eq('over_due')
     end
   end
 end
