@@ -4,12 +4,12 @@ FactoryBot.define do
     description { "This is a description for the ticket." }
     due_date { 1.day.from_now }
     progress { 0 }
-    status
+    status { Status.first || create(:status) }
     assigned_user
 
-    # Trait for assigned_user
+    # Trait for assigned_user with a unique email
     trait :assigned_user do
-      assigned_user_id { create(:user).id }
+      assigned_user { create(:user) }
     end
   end
 end

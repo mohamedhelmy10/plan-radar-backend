@@ -84,6 +84,10 @@ You can monitor your background jobs through the Sidekiq web UI by visiting:
 
 http://localhost:3000/sidekiq
 
+### Run Spec Files
+To run the unit tests locally:
+rspec
+
 ### Testing the Flow
 Once the setup is complete, follow these steps to test the application:
 
