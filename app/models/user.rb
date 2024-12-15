@@ -10,7 +10,7 @@ class User < ApplicationRecord
   validate :valid_time_zone
 
 	# Callbacks
-	after_save :reschedule_due_date_reminders, if: :due_date_reminder_settings_changed?
+	after_save :reschedule_due_date_reminders, if: -> { due_date_reminder_settings_changed? }
 
 	private
 
@@ -23,14 +23,14 @@ class User < ApplicationRecord
   end
 
 	def due_date_reminder_settings_changed?
-    send_due_date_reminder_changed? ||
-      due_date_reminder_interval_changed? ||
-      due_date_reminder_time_changed?
+		saved_change_to_send_due_date_reminder? ||
+    saved_change_to_due_date_reminder_interval? ||
+    saved_change_to_due_date_reminder_time? ||
+		saved_change_to_time_zone?
   end
 
 	def reschedule_due_date_reminders
-    return unless send_due_date_reminder
-
-    tickets.each(&:schedule_due_date_reminder)
-  end
+		tickets.each(&:schedule_due_date_reminder)
+	end
+	
 end
