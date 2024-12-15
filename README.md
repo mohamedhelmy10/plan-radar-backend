@@ -91,6 +91,8 @@ rspec
 ### Testing the Flow
 Once the setup is complete, follow these steps to test the application:
 
+Visit [localhost:](http://localhost:3000)
+
 Visit the Users page and create a user with the necessary configuration.
 Then, go to the Tickets page, create a new ticket, and assign it to the user you created.
 The user should receive an email based on their configurations and time zone.

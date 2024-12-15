@@ -27,7 +27,10 @@
 				<td><%= ticket.progress %></td>
         <td><%= link_to 'Show', ticket_path(ticket) %></td>
         <td><%= link_to 'Edit', edit_ticket_path(ticket) %></td>
-        <td><%= link_to 'Destroy', ticket_path(ticket), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= form_with model: ticket, method: :delete, data: { confirm: 'Are you sure?' } do |form| %>
+  				<%= form.submit 'Destroy' %></td>
+<% end %>
+				</td>
       </tr>
     <% end %>
   </tbody>
