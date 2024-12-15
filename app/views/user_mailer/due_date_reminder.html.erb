@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Task Reminder</h1>
+    <p>Hello <%= @user.name %>,</p>
+    <p>This is a reminder for the task titled "<%= @ticket.title %>" that is due on <%= @ticket.due_date.strftime("%B %d, %Y") %>.</p>
+    <p>Please ensure to complete it on time.</p>
+    <p>Thank you!</p>
+  </body>
+</html>

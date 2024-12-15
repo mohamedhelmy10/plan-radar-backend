@@ -18,11 +18,30 @@ class Ticket < ApplicationRecord
 
 	validate :due_date_not_in_the_past
 
+	# Callbacks
+	after_save :schedule_due_date_reminder, if: :due_date_changed?
+
 	private
 
-  def due_date_not_in_the_past
-    if due_date.present? && due_date < Date.today
-      errors.add(:due_date, "can't be in the past")
-    end
+	def due_date_not_in_the_past
+    errors.add(:due_date, "can't be in the past") if due_date.present? && due_date < Date.today
+  end
+
+	def schedule_due_date_reminder
+    cancel_existing_job if reminder_job_id.present?
+		return unless assigned_user&.send_due_date_reminder
+
+    reminder_time = calculate_reminder_time
+    # Schedule the new reminder job
+    self.reminder_job_id = SendDueDateReminderJob.perform_at(reminder_time, self.id).job_id
+  end
+
+	def cancel_existing_job
+    Sidekiq::ScheduledSet.new.find_job(reminder_job_id)&.delete if reminder_job_id.present?
+  end
+
+	def calculate_reminder_time
+    reminder_time = due_date - assigned_user.due_date_reminder_interval.days
+    reminder_time.change(hour: assigned_user.due_date_reminder_time.hour, min: assigned_user.due_date_reminder_time.min)
   end
 end
