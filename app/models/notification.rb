@@ -9,5 +9,5 @@ class Notification < ApplicationRecord
   validates :notification_type, presence: true
 
   # Enum for notification types
-  enum notification_type: { email: 0, sms: 1, push_message: 2 }
+  enum notification_type: { email: 0 }
 end

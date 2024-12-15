@@ -18,8 +18,8 @@
 </p>
 
 <p>
-  <strong>Reminder Time:</strong>
-  <%= @user.due_date_reminder_time %>
+  <strong>Reminder Time:</strong> 
+  <%= @user.due_date_reminder_time.strftime("%H:%M") %>
 </p>
 
 <p>
